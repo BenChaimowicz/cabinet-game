@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "type": "module",
+  "scripts": {
+    "build": "esbuild --bundle --outfile=./dist/index.js --platform=node --target=node20 ./src/index.ts",
+    "deploy": "run-s build zip update",
+    "update": "aws lambda update-function-code --zip-file fileb://lambda.zip --function-name hello",
+    "zip": "zip -j lambda.zip dist/index.js",
+    "studio": "npx drizzle-kit studio"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "8.10.148",
+    "@types/node": "^22.13.13",
+    "@types/pg": "^8.11.11",
+    "drizzle-kit": "^0.30.5",
+    "esbuild": "^0.21.4",
+    "npm-run-all2": "^6.2.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.41.0",
+    "hono": "^4.7.5",
+    "pg": "^8.14.1",
+    "postgres": "^3.4.5",
+    "sst": "3.10.13"
+  }
+}
