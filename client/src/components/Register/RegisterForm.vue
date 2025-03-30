@@ -1,18 +1,42 @@
 <script setup lang="ts">
-    import { ref } from 'vue';
-
+    import { computed, ref } from 'vue';
+    import LargeButton from '../LargeButton.vue';
+    import SmallInput from '../SmallInput.vue';
+    const name = ref('')
     const email = ref('')
     const password = ref('')
+    const confirmPassword = ref('')
+
+    const isDisabled = computed(() => {
+        return email.value.length === 0 || password.value.length === 0 || confirmPassword.value.length === 0 || password.value !== confirmPassword.value
+    })
+
+    const apiUrl = import.meta.env.DEV ? '/api' : import.meta.env.VITE_API_URL;
+    const register = async () => {
+        try {
+            const response = await fetch(`${apiUrl}/auth/register`, {
+                method: 'POST',
+                body: JSON.stringify({ email: email.value, password: password.value, name: name.value })
+            })
+            const data = await response.json()
+            console.log(data);
+        } catch (error) {
+            console.error(error)
+        }
+    }
 </script>
 
 <template>
     <main>
-        <h1>Register</h1>
-        <form>
-            <input type="email" placeholder="Email" v-model="email" />
-            <input type="password" placeholder="Password" v-model="password" />
-            <button type="submit">Register</button>
-        </form>
+        <h1>Create Your Account</h1>
+        <div>
+            <SmallInput placeholder="Name" v-model="name" />
+            <SmallInput placeholder="Email" v-model="email" />
+            <SmallInput placeholder="Password" v-model="password" />
+            <SmallInput placeholder="Confirm Password" v-model="confirmPassword" />
+            <LargeButton text="Register" :disabled="isDisabled" />
+        </div>
+        <p>Already have an account? <router-link to="/login">Login</router-link></p>
     </main>
 </template>
 
@@ -21,35 +45,10 @@
         display: flex;
         flex-direction: column;
     }
-    form {
+    div {
         display: flex;
         flex-direction: column;
         gap: 10px;
-    }
-    input {
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    button {
-        padding: 8px 16px;
-        background-color: #333;
-        color: white;
-        border: none;
-        border-radius: 20px;
-        width: fit-content;
-        min-width: 100px;
-        font-size: 0.9em;
-        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        cursor: pointer;
-        transition: all 0.2s ease-in-out;
-    }
-
-    button:hover {
-        background-color: #444;
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        align-items: center;
     }
 </style>

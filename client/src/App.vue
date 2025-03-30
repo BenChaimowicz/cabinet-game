@@ -6,6 +6,7 @@
 </script>
 
 <template>
+
   <main>
     <RegisterForm />
   </main>

@@ -7,6 +7,15 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://wj6kn26ngfq5miliygs2kinlfy0jxvyt.lambda-url.us-east-1.on.aws',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
   plugins: [
     vue(),
     vueJsx(),
