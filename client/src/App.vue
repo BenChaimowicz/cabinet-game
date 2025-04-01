@@ -1,14 +1,10 @@
-
-
 <script setup lang="ts">
-    import LoginForm from './components/Login/LoginForm.vue'
-    import RegisterForm from './components/Register/RegisterForm.vue'
+// No need to import components here as they'll be handled by the router
 </script>
 
 <template>
-
   <main>
-    <RegisterForm />
+    <router-view></router-view>
   </main>
 </template>
 

@@ -2,11 +2,12 @@
     defineProps<{
         text: string
         disabled?: boolean
+        loading?: boolean
     }>()
 </script>
 
 <template>
-    <button :disabled="disabled">
+    <button :disabled="disabled || loading" :class="{ 'loading': loading }">
         {{ text }}
     </button>
 </template>
@@ -26,6 +27,7 @@
         letter-spacing: 0.5px;
         cursor: pointer;
         transition: all 0.2s ease-in-out;
+        position: relative;
     }
 
     button:hover:not(:disabled) {
@@ -39,5 +41,33 @@
         color: #999;
         cursor: not-allowed;
         opacity: 0.7;
+    }
+
+    button.loading::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: 20px;
+        background-color: #333;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    button.loading {
+        background-color: transparent;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+        50% {
+            transform: scale(0.95);
+            opacity: 0.8;
+        }
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 </style>

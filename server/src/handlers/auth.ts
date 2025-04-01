@@ -16,14 +16,35 @@ const DEFAULT_HASH_SETTINGS = {
     saltSize: 16
 }
 
+const verifyPassword = async (password: string, storedHash: string): Promise<boolean> => {
+    try {
+        const [, , params, saltBase64, storedHashBase64] = storedHash.split('$');
+        const paramsObj = Object.fromEntries(params.split(',').map(p => p.split('=')));
+        
+        const salt = Buffer.from(saltBase64, 'base64');
+        const hash = await pbkdf2Async(
+            password,
+            salt,
+            parseInt(paramsObj.iter),
+            DEFAULT_HASH_SETTINGS.keyLength,
+            paramsObj.digest
+        );
+        
+        return hash.toString('base64') === storedHashBase64;
+    } catch (error) {
+        console.error(error);
+        return false;
+    }
+}
+
 const login = async (email: string, password: string) => {
     try {
         const lord = await db.select().from(lordsTable).where(eq(lordsTable.email, email)).limit(1);
         if (!lord[0]) {
             throw new Error('Invalid credentials');
         }
-        const hashedPassword = await hashPassword(password);
-        if (lord[0].password !== hashedPassword) {
+        const isValid = await verifyPassword(password, lord[0].password);
+        if (!isValid) {
             throw new Error('Invalid credentials');
         }
         return {...lord[0], password: undefined};
@@ -32,7 +53,6 @@ const login = async (email: string, password: string) => {
         throw new Error('Failed to login');
     }
 }
-
 
 export const hashPassword = async (password: string, settings: {iterations: number, keyLength: number, digest: string, saltSize: number} = DEFAULT_HASH_SETTINGS): Promise<string> => {
     try {

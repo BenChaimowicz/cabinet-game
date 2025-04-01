@@ -34,7 +34,7 @@
             <SmallInput placeholder="Email" v-model="email" />
             <SmallInput placeholder="Password" v-model="password" />
             <SmallInput placeholder="Confirm Password" v-model="confirmPassword" />
-            <LargeButton text="Register" :disabled="isDisabled" />
+            <LargeButton text="Register" :disabled="isDisabled" @click="register" />
         </div>
         <p>Already have an account? <router-link to="/login">Login</router-link></p>
     </main>
