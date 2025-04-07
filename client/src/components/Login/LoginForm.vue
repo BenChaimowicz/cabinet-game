@@ -3,6 +3,7 @@
     import SmallInput from '../SmallInput.vue';
     import LargeButton from '../LargeButton.vue';
     import { ref } from 'vue';
+    import router from '../../router';
 
     const email = ref('')
     const password = ref('')
@@ -19,6 +20,8 @@
             const data = await response.json()
             console.log(data);
             loading.value = false
+            localStorage.setItem('token', data.token)
+            router.push('/scenario/7450cd51-64ae-4db8-8065-412abb5d26d4');
         } catch (error) {
             console.error(error)
             loading.value = false
