@@ -21,11 +21,18 @@
 </script>
 
 <template>
-    <ScenarioViewer :scenario="scenario" />
-    <SmallInput placeholder="Enter your response" v-model="response" :button="true"/>
+    <div class="scenario-container">
+        <ScenarioViewer :scenario="scenario" />
+        <SmallInput placeholder="Enter your response" v-model="response" :button="true"/>
+    </div>
 </template>
 
 <style scoped>
-
+.scenario-container {
+    background-color: #22182b;
+    border-radius: 22px;
+    padding: 20px;
+    margin: 20px;
+}
 </style>
 

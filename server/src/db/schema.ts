@@ -26,6 +26,14 @@ export const scenariosTable = pgTable('scenarios', {
     createdAt: timestamp().notNull().defaultNow(),
 });
 
+export const actionsTable = pgTable('actions', {
+    id: uuid().primaryKey().default(sql`gen_random_uuid()`),
+    content: text().notNull(),
+    scenarioId: uuid().references(() => scenariosTable.id),
+    createdAt: timestamp().notNull().defaultNow(),
+    updatedAt: timestamp().notNull().defaultNow().$onUpdate(() => new Date()),
+});
+
 // Many-to-Many:
 export const lordsGamesTable = pgTable('lords_games', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -34,6 +42,7 @@ export const lordsGamesTable = pgTable('lords_games', {
     createdAt: timestamp().notNull().defaultNow(),
     updatedAt: timestamp().notNull().defaultNow().$onUpdate(() => new Date()),
 });
+
 
 
 export type insertLord = typeof lordsTable.$inferInsert;
