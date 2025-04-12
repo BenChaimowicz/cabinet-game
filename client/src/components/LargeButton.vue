@@ -1,14 +1,20 @@
 <script setup lang="ts">
     defineProps<{
-        text: string
+        text?: string
         disabled?: boolean
-        loading?: boolean
+        isLoading?: boolean
+        icon?: string
     }>()
 </script>
 
 <template>
-    <button :disabled="disabled || loading" :class="{ 'loading': loading }">
-        {{ text }}
+    <button :disabled="disabled || isLoading" :class="{ 'loading': isLoading }">
+        <span v-if="icon" class="icon">
+            <Icon :name="icon" />
+        </span>
+        <span v-if="text" class="text">
+            {{ text }}
+        </span>
     </button>
 </template>
 

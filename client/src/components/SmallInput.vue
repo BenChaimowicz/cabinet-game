@@ -6,6 +6,7 @@
         modelValue: string
         disabled?: boolean
         button?: boolean
+        isLoading?: boolean
     }>()
     defineEmits<{
         (e: 'update:modelValue', value: string): void
@@ -19,7 +20,7 @@
 <template>
     <div class="input-wrapper">
         <input :placeholder="placeholder" :value="modelValue" @input="$emit('update:modelValue', ($event.target as HTMLInputElement).value) ?? ''" :disabled="isDisabled" />
-        <LargeButton v-if="button" text="Send" @click="$emit('send', modelValue)" :disabled="isDisabled" />
+        <LargeButton v-if="button" text="Send" @click="$emit('send', modelValue)" :disabled="isDisabled" :loading="isLoading" />
     </div>
 </template>
 

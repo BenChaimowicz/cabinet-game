@@ -10,11 +10,13 @@
 
     const scenario = ref<Scenario | null>(null);
     const response = ref('');
+    const isLoading = ref(true);
 
     const fetchScenario = async () => {
         const response = await fetch(`/api/scenario/${scenarioId}`)
         const data = await response.json()
         scenario.value = data[0]
+        isLoading.value = false;
     }
 
     fetchScenario()
@@ -22,8 +24,8 @@
 
 <template>
     <div class="scenario-container">
-        <ScenarioViewer :scenario="scenario" />
-        <SmallInput placeholder="Enter your response" v-model="response" :button="true"/>
+        <ScenarioViewer :scenario="scenario" :isLoading="isLoading" />
+        <SmallInput placeholder="Enter your response" v-model="response" :button="true" :isLoading="isLoading" />
     </div>
 </template>
 

@@ -1,21 +1,25 @@
 <script setup lang="ts">
-    import { ref } from 'vue'
+    import { ref, computed } from 'vue'
     import type { Scenario } from '@/types';
     
 
     const props = defineProps<{
         scenario?: Scenario | null
+        isLoading?: boolean
     }>()
-    
+    const isLoading = computed(() => props.isLoading);
 </script>
 
 
 <template>
-      <div class="text-content">
-    <p class="paragraph">
-      {{ props.scenario?.content }}
-    </p>
-</div>
+    <div v-if="isLoading" class="loading-container">
+        <div class="loading-spinner"></div>
+    </div>
+    <div v-else class="text-content">
+        <p class="paragraph">
+            {{ props.scenario?.content }}
+        </p>
+    </div>
 </template>
 
 <style scoped>

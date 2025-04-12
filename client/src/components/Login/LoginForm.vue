@@ -35,7 +35,7 @@
         <div>
             <SmallInput placeholder="Email" v-model="email" />
             <SmallInput placeholder="Password" v-model="password" />
-            <LargeButton text="Login" @click="login" :loading="loading" />
+            <LargeButton text="Login" @click="login" :isLoading="loading" />
         </div>
         <p>Don't have an account? <router-link to="/register">Register</router-link></p>
     </main>
