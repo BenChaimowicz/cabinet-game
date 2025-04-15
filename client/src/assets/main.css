@@ -1,5 +1,13 @@
 @import './base.css';
 
+:root {
+  --primary-color: hsla(160, 100%, 37%, 1);
+  --primary-hover: hsla(160, 100%, 37%, 0.2);
+  --text-color: #213547;
+  --background-color: #22182b;
+  --border-color: #ddd;
+}
+
 #app {
   max-width: 1280px;
   margin: 0 auto;
@@ -10,14 +18,14 @@
 a,
 .green {
   text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
+  color: var(--primary-color);
   transition: 0.4s;
   padding: 3px;
 }
 
 @media (hover: hover) {
   a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+    background-color: var(--primary-hover);
   }
 }
 
@@ -33,3 +41,4 @@ a,
     padding: 0 2rem;
   }
 }
+

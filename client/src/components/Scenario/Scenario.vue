@@ -31,7 +31,7 @@
 
 <style scoped>
 .scenario-container {
-    background-color: #22182b;
+    background-color: var(--color-background-purple-mid);
     border-radius: 22px;
     padding: 20px;
     margin: 20px;
