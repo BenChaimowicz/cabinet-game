@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { handle } from 'hono/aws-lambda';
 import { logger } from 'hono/logger';
 import { cors } from 'hono/cors';
+import { gameRouter } from './handlers/game';
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { scenarioRouter } from './handlers/scenario';
@@ -25,6 +26,7 @@ app.use('*', logger())
 app.route('/scenario', scenarioRouter)
 app.route('/lord', lordRouter)
 app.route('/auth', authRouter)
+app.route('/game', gameRouter)
 app.get('/', (c) => {
   return c.text('Hello Cabinet!')
 })

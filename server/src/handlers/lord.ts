@@ -3,6 +3,7 @@ import { db } from '../index';
 import { lordsTable, insertLord } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { hashPassword } from './auth';
+import { getGamesByLordId } from './game';
 const lordRouter = new Hono();
 
 const getLord = async (id: string) => {
@@ -34,6 +35,12 @@ lordRouter.get('/:id', async (c) => {
 lordRouter.post('/', async (c) => {
     const lord = await createLord(await c.req.json());
     return c.json(lord);
+});
+
+lordRouter.get('/:id/games', async (c) => {
+    const id = c.req.param('id');
+    const games = await getGamesByLordId(id);
+    return c.json(games);
 });
 
 export { lordRouter };
